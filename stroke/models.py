@@ -5,5 +5,5 @@ from django.utils import timezone
 
 class ImageUploadModel(models.Model):
     description = models.CharField(max_length=255, blank=True)
-    document = models.ImageField(upload_to = 'images/%Y/%m/%d')
+    document = models.ImageField(upload_to = 'images/')
     uploaded_at = models.DateTimeField(auto_now_add=True)

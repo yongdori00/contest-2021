@@ -5,15 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>
-        title
+        건강한 얼굴 건강한 정신
     </title>
+    <style>
+        #container {
+            margin : 5%;
+            border-top-style : solid;
+            border-bottom-style : solid;
+            border-top-width : thick;
+            border-bottom-width : thick;
+            text-align: center;
+        }
+        #button {
+            margin : 5%;
+        }
+        #header {
+            border-bottom-style : solid;
+            border-bottom-width: thin;
+        }
+        #description {
+            text-align : left;
+            font-size: 70%;
+            margin-top: 10%;
+        }
+    </style>
 </head>
 <body>
-    <font size = "25em">
-        뇌졸중 검사기
-        <br>
-    </font>
-    <button type="button" onclick="location.href='/show_result' ">테스트 시작</button>
-    <button type="button" onclick="location.href='/show_train_result' ">트레이닝</button>
+    <div id="container" class="container" >
+        <div id="header">
+            <h1 style = "font-size: 100%">건강한 얼굴 건강한 정신</h1>
+            <p style = "font-size: 70%">안면 마비를 확인하여 뇌졸중을 자가진단 해보세요!</p>
+        </div>
+        <div id="description">
+            <p style = "font-size : 100%">이렇게 사진을 찍어서 첨부해주세요!</p>
+            <p>1. 눈은 최대한 크게 떠주세요.</p>
+            <p>2. 입술은 다물어주세요.</p>
+            <p>3. 최대한 크게 웃어주세요.</p>
+        </div>
+        <button id="button" type="button" onclick="location.href='/show_train_result' " style = "font-size: 70%">파일 업로드하는 방법으로 할게요~</button>
+        <button id="button" type="button" onclick="location.href='/capture_image' " style = "font-size: 70%">직접 캡처 해볼게용</button>
+    </div>
 </body>
 </html>

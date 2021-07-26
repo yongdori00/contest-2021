@@ -1,5 +1,5 @@
 import numpy as np
-from .results import left_right_gap
+from .results import left_right_gap, use_image
 import os
 import sys
 from django.conf import settings
@@ -62,7 +62,6 @@ def predict(x):
         
     return y, result
 
-
 def training(FileName):
     global W, b
     learning_rate = 1e-2 #발산 방지
@@ -74,7 +73,6 @@ def training(FileName):
     odd_file_list = os.listdir(odd_path_dir)
     files = []
     t_data = []
-    print('odd_________')
     for i in range(len(odd_file_list)):
         img = odd_path_dir + '/' + odd_file_list[i]
         gap = left_right_gap(img)
@@ -88,7 +86,6 @@ def training(FileName):
     normal_path_dir = baseUrl + '/normal_pictures'
     normal_file_list = os.listdir(normal_path_dir)
 
-    print('normal_________')
     for i in range(len(normal_file_list)):
         img = normal_path_dir + '/' + normal_file_list[i]
         gap = left_right_gap(img)
@@ -101,13 +98,8 @@ def training(FileName):
     x_data = np.array(files).reshape(len(files), 1)
     t_data = np.array(t_data).reshape(len(t_data), 1)
 
-        
-    print("W = ", W, ", W.shape = ", W.shape, ", b = ", b, " , b.shape = ", b.shape)
-
                 
     f= lambda x : loss_func(x_data, t_data)
-
-    print("initial error value = ", error_val(x_data, t_data), "initial W = ", W, " \n", ", b = ", b)
 
                     
     for step in range(30001):
@@ -118,6 +110,8 @@ def training(FileName):
             print("step = ", step, "error value = ", error_val(x_data, t_data), "W = ", W, " , b = ", b)    
 
     pre_num = predict(left_right_gap(FileName))[0][0][0]
+
+    use_image(FileName)
     
     if pre_num >= 0.5:
         return '뇌졸중이 의심됩니다.'

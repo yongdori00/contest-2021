@@ -313,6 +313,7 @@ def use_image(FilePath): #있는 이미지 사용
         img = Image.open(FilePath).convert('RGB')
         name = root + '.jpg'
         img.save(name, 'jpeg')
+        os.remove(root + '.png')
     win = dlib.image_window()
     image = io.imread(root+'.jpg')
     cv2.imwrite('test2.jpg',image)    
@@ -337,9 +338,10 @@ def use_image(FilePath): #있는 이미지 사용
                   (face_rect.right(),face_rect.bottom()),
                    (0,255,0),2)
         crop = im1[face_rect.top():face_rect.bottom(),face_rect.left():face_rect.right()]
-        cv2.imwrite('output.jpg',crop)
+        cv2.imwrite(FilePath[:-4] + '_new.jpg',crop)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
+        os.remove(root+'.jpg')
         # Draw the face landmarks on the screen.
 
 def result_main(FilePath, is_capture):
