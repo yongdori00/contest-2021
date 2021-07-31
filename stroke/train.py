@@ -113,6 +113,11 @@ def training(FileName):
 
     use_image(FileName)
     
+    f = open("./data.txt", 'w')
+    f.write(str(W[0,0]) + '\n')
+    f.write(str(b[0]))
+    f.close()
+    
     if pre_num >= 0.5:
         return '뇌졸중이 의심됩니다.'
     else:

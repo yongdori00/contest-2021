@@ -47,6 +47,11 @@ COLOUR_CORRECT_BLUR_FRAC = 0.6
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(PREDICTOR_PATH)
 
+f = open("./data.txt", 'r')
+W = numpy.array(float(f.readline().rstrip('\n')))
+W = numpy.array(W).reshape(1,1)
+b = numpy.array(float(f.readline()))
+b = numpy.array(b).reshape(1)
 
 def capture(camid = CAM_ID):
     
@@ -75,6 +80,20 @@ def newSection():
     ter_int = terminal_size()
     print ("\n" + ("_" * (int(ter_int))) + "\n\n")
 
+
+def sigmoid(x):
+    return 1/(1+numpy.exp(-x))
+    
+def predict(x):
+    z = numpy.dot(x, W) + b
+    y = sigmoid(z)
+    
+    if y > 0.5:
+        result = 1
+    else:
+        result = 0
+        
+    return y, result
 
 def dist(x, y):
     a = x[0,0] - y[0,0]
@@ -300,6 +319,10 @@ def capture_image(): #새로운 이미지 캡쳐
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
         # Draw the face landmarks on the screen.
+            
+    print(dtype(left_right_gap(imgname)))
+    print(predict(left_right_gap(imgname)))
+    dlib.hit_enter_to_continue()
     
     
 def use_image(FilePath): #있는 이미지 사용
@@ -342,7 +365,13 @@ def use_image(FilePath): #있는 이미지 사용
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
         os.remove(root+'.jpg')
-        # Draw the face landmarks on the screen.
+        # Draw the face landmarks on the screen. 
+    pre_num = predict(left_right_gap(root + '.jpg'))[0][0][0]
+    
+    if pre_num >= 0.5:
+        return '뇌졸중이 의심됩니다.'
+    else:
+        return '뇌졸중이 의심되지 않습니다.'
 
 def result_main(FilePath, is_capture):
     if is_capture == True:
