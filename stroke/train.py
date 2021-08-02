@@ -108,17 +108,8 @@ def training(FileName):
         
         if (step % 10000 == 0):
             print("step = ", step, "error value = ", error_val(x_data, t_data), "W = ", W, " , b = ", b)    
-
-    pre_num = predict(left_right_gap(FileName))[0][0][0]
-
-    use_image(FileName)
     
     f = open("./data.txt", 'w')
     f.write(str(W[0,0]) + '\n')
     f.write(str(b[0]))
     f.close()
-    
-    if pre_num >= 0.5:
-        return '뇌졸중이 의심됩니다.'
-    else:
-        return '뇌졸중이 의심되지 않습니다.'
