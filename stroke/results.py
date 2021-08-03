@@ -47,7 +47,11 @@ COLOUR_CORRECT_BLUR_FRAC = 0.6
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(PREDICTOR_PATH)
 
+<<<<<<< HEAD
 f = open(settings.STATIC_ROOT_URL + settings.STATIC_URL + "/data/data.txt", 'r')
+=======
+f = open("./data.txt", 'r')
+>>>>>>> cfa270a91ff94f096ff3e17b4ace9ad6928af660
 W = numpy.array(float(f.readline().rstrip('\n')))
 W = numpy.array(W).reshape(1,1)
 b = numpy.array(float(f.readline()))

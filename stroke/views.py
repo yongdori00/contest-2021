@@ -7,6 +7,7 @@ from django.conf import settings
 from .train import training
 from .results import result_main
 import os
+<<<<<<< HEAD
 from django.views.generic import View
 from django.http import HttpResponse
 
@@ -23,6 +24,8 @@ class ReactAppView(View):
         except:
             
             return HttpResponse(status=501,)
+=======
+>>>>>>> cfa270a91ff94f096ff3e17b4ace9ad6928af660
 
 def create(request):
     return render(request, 'stroke/main.html', {})
@@ -43,6 +46,13 @@ def show_train_result(request):
             temp_get_image_url = get_image_url[:-4]
             temp_get_image_url = temp_get_image_url + '_new.jpg'
 
+<<<<<<< HEAD
+=======
+            get_image_url = imageURL         #output 이미지
+            temp_get_image_url = get_image_url[:-4]
+            temp_get_image_url = temp_get_image_url + '_new.jpg'
+
+>>>>>>> cfa270a91ff94f096ff3e17b4ace9ad6928af660
             return render(request, 'stroke/show_train_result.html',{'form':form,'post':post,'result_str':result_str, 'get_image' : temp_get_image_url})
     else:
         form = ImageUploadForm()
