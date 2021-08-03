@@ -5,9 +5,9 @@ from django.conf.urls.static import static
 from . import views
 
 urlpatterns = [
-    path('', views.create, name = 'main'),
+    path("", views.ReactAppView.as_view()),
+    #path('', views.create, name = 'main'),
     path('show_train_result/', views.show_train_result, name='show_train_result'),
     path('show_result/', views.show_result, name='show_result'),
-    path('get_image/', views.get_image, name='get_image')
-    #path('get')
+    path('capture_image/', views.capture, name='capture_image')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,5 +1,5 @@
 import numpy as np
-from .results import left_right_gap
+from .results import left_right_gap, use_image
 import os
 import sys
 from django.conf import settings
@@ -62,19 +62,17 @@ def predict(x):
         
     return y, result
 
-
 def training(FileName):
     global W, b
     learning_rate = 1e-2 #발산 방지
 
     #안면장애를 가진 사람들 사진 학습
-    baseUrl = settings.MEDIA_ROOT_URL + settings.MEDIA_URL
+    baseUrl = settings.STATIC_ROOT_URL + settings.STATIC_URL
 
-    odd_path_dir = baseUrl + '/odd_pictures' 
+    odd_path_dir = baseUrl + '/data/img/odd_pictures' 
     odd_file_list = os.listdir(odd_path_dir)
     files = []
     t_data = []
-    print('odd_________')
     for i in range(len(odd_file_list)):
         img = odd_path_dir + '/' + odd_file_list[i]
         gap = left_right_gap(img)
@@ -85,10 +83,9 @@ def training(FileName):
         t_data.append(1)
 
     #정상 사람들 사진 학습
-    normal_path_dir = baseUrl + '/normal_pictures'
+    normal_path_dir = baseUrl + '/data/img/normal_pictures'
     normal_file_list = os.listdir(normal_path_dir)
 
-    print('normal_________')
     for i in range(len(normal_file_list)):
         img = normal_path_dir + '/' + normal_file_list[i]
         gap = left_right_gap(img)
@@ -101,13 +98,8 @@ def training(FileName):
     x_data = np.array(files).reshape(len(files), 1)
     t_data = np.array(t_data).reshape(len(t_data), 1)
 
-        
-    print("W = ", W, ", W.shape = ", W.shape, ", b = ", b, " , b.shape = ", b.shape)
-
                 
     f= lambda x : loss_func(x_data, t_data)
-
-    print("initial error value = ", error_val(x_data, t_data), "initial W = ", W, " \n", ", b = ", b)
 
                     
     for step in range(30001):
@@ -116,10 +108,8 @@ def training(FileName):
         
         if (step % 10000 == 0):
             print("step = ", step, "error value = ", error_val(x_data, t_data), "W = ", W, " , b = ", b)    
-
-    pre_num = predict(left_right_gap(FileName))[0][0][0]
     
-    if pre_num >= 0.5:
-        return '뇌졸중이 의심됩니다.'
-    else:
-        return '뇌졸중이 의심되지 않습니다.'
+    f = open(settings.STATIC_ROOT_URL + settings.STATIC_URL + "/data/data.txt", 'w')
+    f.write(str(W[0,0]) + '\n')
+    f.write(str(b[0]))
+    f.close()

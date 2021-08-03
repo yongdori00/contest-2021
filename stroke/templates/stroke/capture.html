@@ -1,0 +1,45 @@
+<video id="video" width="320" height="240" autoplay="autoplay"></video>
+<canvas id="canvas" width="960" height="720"></canvas>
+<button type="button" id="webcamBtn">캡쳐하기</button>
+
+<script>
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator
+            .mediaDevices
+            .getUserMedia({video: true})
+            .then(function (stream) {
+                var video = document.getElementById('video');
+                video.srcObject = stream;
+                video.play();
+            });
+    }
+
+    var canvas = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
+    var video = document.getElementById('video');
+    document
+        .getElementById("webcamBtn")
+        .addEventListener("click", function () {
+            context.drawImage(video, 0, 0, 960, 720);
+            // get image data as string
+            const imageString = canvas.toDataURL('image/jpg', 1.0);
+            
+            // send image to server
+            fetch('/media/images', {
+                method: "POST",
+                cache: "no-cache",
+                credentials: "same-origin",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({imageString: imageString})
+            })
+        });
+    
+
+
+    document
+        .getElementById('video')
+        .addEventListener('ended', myHandler, false);
+    function myHandler(e) {}
+</script>

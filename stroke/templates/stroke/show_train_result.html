@@ -1,25 +1,27 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="save btn btn-default" value="" upload> save!!</button>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+    </head>
+    <body>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="save btn btn-default" value="" upload="upload">
+                save!!</button>
 
-</form>
-    {% if post %}
-    <img src="{{ post.document.url }}" >
-    <p>File uploaded at: <a href="{{ post.document.url }}">{{ post.document }}</a></p>
-    결과 : {{result_str}}
-    {% endif %}
+        </form>
+        {% if post %}
+            <img src="{{ get_image }}">
+            결과 :
+            {{result_str}}
+        {% endif %}
 
-    <p><a href="{% url 'main' %}">Return to home</a></p>
-</body>
+        <p>
+            <a href="{% url 'main' %}">Return to home</a>
+        </p>
+    </body>
 </html>
