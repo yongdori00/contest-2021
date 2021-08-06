@@ -1,10 +1,7 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 import {MdClose} from 'react-icons/md';
-import { Button } from './Button';
 import axios from 'axios';
-import { ResultModal } from './ResultModal';
-
 const Background = styled.div`
     width: 100%;
     height: 100%;
@@ -21,7 +18,7 @@ const ModalWrapper = styled.div`
     box-shadow: 0 5px 16px rgba(0,0,0,0.2);
     background: #fff;
     color: #000;
-    display: flex;
+    display: grid;
     grid-template-columns: 1fr 1fr;
     position: absolute;
     z-index: 10;
@@ -71,47 +68,28 @@ const CloseModalButton = styled(MdClose)`
     padding: 0;
     z-index: 10;
 `
-export const ImagePreview = ({showImagePreview, setShowImagePreview, ImageSrc}) => {
-    //const [image, setImage] = useState('');
-    const [showResultModal, setShowResultModal] = useState(false);
-    const [ip, setIP] = useState('');
 
-    const getData = async () => {
-        const res = await axios.get('https://geolocation-db.com/json/')
-        console.log(res.data);
-        setIP(res.data.IPv4)
-        console.log(ip);
-      }
-
-    const postImage = () => {
-        const URL = "http://localhost:8000/api";
-        getData()
-        axios.post(URL, {
-            'id' : 1,
-            'description' : ip,
-            'document': ImageSrc
-        })
+export const ResultModal = ({showResultModal, setShowResultModal}) =>{
+    const [ready, setReady] = useState(false);
+    const getResult = () => {
+        const URL = "";
+        axios.get(URL)
         .then((Response)=>{console.log(Response.data)})
         .catch((Error)=>{console.log(Error)})
-        setShowImagePreview(prev=>!prev);
-        setShowResultModal(prev=>!prev);
-    }
 
+        //setReady(true);
+    }
+    getResult();
     return(
         <>
-        <ResultModal showResultModal={showResultModal} setShowResultModal={setShowResultModal}/>
-        {showImagePreview ? (
+            
+            {showResultModal ? (
             <Background>
+                <ModalWrapper showResultModal={showResultModal}>
+                {ready ? null: (<p>Loading</p>)}        
+                <CloseModalButton onClick={()=>setShowResultModal(prev=>!prev)}/>
                 
-                <ModalWrapper showImagePreview={showImagePreview}>
-                
-                <ModalImg src={ImageSrc}></ModalImg>
-                <button>
-                <Button className="btn btn-success" buttonStyle='btn--primary' buttonSize='btn--outline' onClick={postImage}>제출<i className="fas fa-paper-plane"></i></Button>
-                </button>
-                <CloseModalButton onClick={()=>setShowImagePreview(prev=>!prev)}/>
                 </ModalWrapper>
-                
             </Background>
             ): null}
         </>

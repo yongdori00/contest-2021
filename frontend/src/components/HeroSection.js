@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import '../App.css';
 import {Button} from './Button';
 import './HeroSection.css';
-import backgroundVideo from '../videos/video-7.swf';
+import backgroundVideo from '../videos/video-7.mp4';
 
 import { Modal } from './Modal';
 import { GlobalStyle } from './globalStyle';
@@ -21,8 +21,8 @@ function HeroSection() {
             <p>지금 받아보세요</p>
             <div className="hero-btns">
                 <Button className="btns" buttonStyle='btn--outline' buttonSize='btn--large' onClick={openModal}>사진 찍기<i className="fas fa-camera"></i></Button>
-                
                 <Modal showModal={showModal} setShowModal={setShowModal}/> 
+                
                 <GlobalStyle/>
             </div>
             

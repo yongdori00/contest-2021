@@ -84,12 +84,11 @@ export const Modal = ({showModal, setShowModal}) =>{
         setShowImagePreview(prev => !prev);
         setShowModal(prev => !prev);
         },
-        [webcamRef] 
-        
+        [webcamRef]
     ); 
     const videoConstraints = {
         width: 1280,
-        height: 720,
+        height: 1024,
         facingMode: "user"
     };
     return(
@@ -101,13 +100,13 @@ export const Modal = ({showModal, setShowModal}) =>{
                 <ModalWrapper showModal={showModal}>
                         <Webcam
                             audio={false}
-                            //height={720}
+                            height={1024}
                             ref={webcamRef}
                             screenshotFormat="image/jpeg"
-                            //width={1280}
+                            width={1280}
                             mirrored={false}
                             imageSmoothing={true}
-                            forceScreenshotSourceSize="true"
+                            //forceScreenshotSourceSize="true"
                             videoConstraints={videoConstraints}
                             style={{
                                 height: "100%",
@@ -121,14 +120,14 @@ export const Modal = ({showModal, setShowModal}) =>{
                 
                 <CloseModalButton onClick={()=>setShowModal(prev=>!prev)}/>
                 <button>
-                <ModalContent>
-                        <h1>검사 방법</h1>
-                        <p>웹 카메라가 준비되어 있는지 확인 해주세요</p>
-                        <p>1. 얼굴에 그림자가 지지 않도록 밝은 곳에서 진행 해주세요</p>
-                        <p>2. 정면을 보고 웃어주세요</p>
-                        <p>3. 카메라를 응시한 채 '사진 찍기' 버튼을 눌러주세요</p>
-                        <p>4. 사진이 제대로 나왔는지 확인 후 '제출' 버튼을 통해 제출 해주세요</p>
-                        <p>5. 결과가 나올 때 까지 잠시 기다려주세요</p>
+                    <ModalContent>
+                            <h1>검사 방법</h1>
+                            <p>웹 카메라가 준비되어 있는지 확인 해주세요</p>
+                            <p>1. 얼굴에 그림자가 지지 않도록 밝은 곳에서 진행 해주세요</p>
+                            <p>2. 정면을 보고 웃어주세요</p>
+                            <p>3. 카메라를 응시한 채 '사진 찍기' 버튼을 눌러주세요</p>
+                            <p>4. 사진이 제대로 나왔는지 확인 후 '제출' 버튼을 통해 제출 해주세요</p>
+                            <p>5. 결과가 나올 때 까지 잠시 기다려주세요</p>
                     </ModalContent>
                 <Button className="btns" buttonStyle='btn--outline' buttonSize='btn--large' onClick={capture}>사진 찍기<i className="fas fa-camera"></i></Button>
                 </button>
