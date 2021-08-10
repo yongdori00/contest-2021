@@ -82,6 +82,7 @@ export const Modal = ({showModal, setShowModal}) =>{
     }
     
     
+
     return(
         <>
             <ImagePreview showImagePreview={showImagePreview} setShowImagePreview={setShowImagePreview}/>
@@ -101,6 +102,7 @@ export const Modal = ({showModal, setShowModal}) =>{
                             <p>2. 오른쪽 사진과 같이 정면을 보고 웃어주세요</p>
                             <p>3. 카메라를 응시한 채 '캡쳐' 버튼을 눌러주세요</p>
                             <p>4. 결과가 나올 때 까지 잠시 기다려주세요</p>
+
                     </ModalContent>
                 <Button className="btns" buttonStyle='btn--outline' buttonSize='btn--large' onClick={nextModal}>사진 찍기<i className="fas fa-camera"></i></Button>
                 </button>

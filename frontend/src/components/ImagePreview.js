@@ -4,8 +4,11 @@ import {MdClose} from 'react-icons/md';
 import { Button } from './Button';
 import axios from 'axios';
 import { ResultModal } from './ResultModal';
+<<<<<<< HEAD
 import xtype from 'xtypejs';
 import Webcam from "react-webcam";
+=======
+>>>>>>> refs/remotes/origin/main
 
 const Background = styled.div`
     width: 100%;
@@ -136,7 +139,11 @@ export const ImagePreview = ({showImagePreview, setShowImagePreview}) => {
                             }}
                         />
                 <button>
+<<<<<<< HEAD
                 <Button className="btns" buttonStyle='btn--primary' buttonSize='btn--outline' onClick={capture}>캡쳐<i className="fas fa-paper-plane"></i></Button>
+=======
+                <Button className="btn btn-success" buttonStyle='btn--primary' buttonSize='btn--outline' onClick={postImage}>제출<i className="fas fa-paper-plane"></i></Button>
+>>>>>>> refs/remotes/origin/main
                 </button>
                 <CloseModalButton onClick={()=>setShowImagePreview(prev=>!prev)}/>
                 </ModalWrapper>
