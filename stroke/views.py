@@ -28,19 +28,12 @@ class ReactAppView(View):
             return HttpResponse(status=501,)
 
     def post(self, request):
-<<<<<<< HEAD
         print("asbd")
-=======
->>>>>>> refs/remotes/origin/main
         if request.method =='POST':
             form = ImageUploadForm(request.POST, request.FILES)
             if form.is_valid():
                 post = form.save(commit=False)
                 post.save()
-<<<<<<< HEAD
-=======
-                return 
->>>>>>> refs/remotes/origin/main
 '''
 def create(request):
     return render(request, 'stroke/main.html', {})
@@ -49,11 +42,7 @@ def create(request):
 class SubmitPhotoView(viewsets.ModelViewSet):
     queryset = ImageUploadModel.objects.all()
     serializer_class = ImageUploadSerializer
-<<<<<<< HEAD
     
-=======
-'''
->>>>>>> refs/remotes/origin/main
     def list(self, request):
         queryset = self.get_queryset()
         serializer_class = self.get_serializer_class()
@@ -65,29 +54,8 @@ class SubmitPhotoView(viewsets.ModelViewSet):
             return self.get_paginated_response(serializer.data)
 
         return Response(serializer.data)
-<<<<<<< HEAD
-=======
-'''
->>>>>>> refs/remotes/origin/main
-    #image = Image.open(serializer.data)
-    #image.show()
 
-
-    #result_main()
-'''
-    def get(self, request, *args, **kwargs):
-        return self.list(request)
-    
-    # developer 생성
-    def post(self, request, *args, **kwargs):
-        return self.create(request)
-'''
-
-<<<<<<< HEAD
 '''def show_train_result(request):
-=======
-def show_train_result(request):
->>>>>>> refs/remotes/origin/main
     result_str = ''
     if request.method =='POST':
         form = ImageUploadForm(request.POST, request.FILES)
@@ -126,8 +94,4 @@ def show_result(request):
             return render(request, 'stroke/show_result.html',{'form':form,'post':post,'result_str':result_str, 'get_image' : temp_get_image_url})
     else:
         form = ImageUploadForm()
-<<<<<<< HEAD
     return render(request, 'stroke/show_result.html',{'form':form})'''
-=======
-    return render(request, 'stroke/show_result.html',{'form':form})
->>>>>>> refs/remotes/origin/main
