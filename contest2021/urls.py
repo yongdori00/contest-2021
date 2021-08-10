@@ -17,10 +17,17 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
 
+from stroke.views import SubmitPhotoView
+from rest_framework import routers
+
+route = routers.DefaultRouter()
+route.register("", SubmitPhotoView, basename='submitphotoview')
+
 app_name = 'stroke'
 
 urlpatterns = [
     path('', include('stroke.urls')),
     path('admin/', admin.site.urls),
+    path('api/', include(route.urls)),
     #path('a/', TemplateView.as_view(template_name='index.html')),
 ]

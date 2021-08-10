@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import *
 
 
-class MiseSerializer(serializers.ModelSerializer):
+class ImageUploadSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Mise
+        model = ImageUploadModel
         fields = '__all__'

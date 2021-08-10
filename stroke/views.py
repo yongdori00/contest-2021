@@ -7,12 +7,14 @@ from django.conf import settings
 from .train import training
 from .results import result_main
 import os
-<<<<<<< HEAD
 from django.views.generic import View
 from django.http import HttpResponse
+from .models import ImageUploadModel
+from .serializers import ImageUploadSerializer
+from rest_framework.response import Response
+from rest_framework import viewsets
 
 class ReactAppView(View):
-
     def get(self, request):
         try:
             with open(os.path.join(str(settings.BASE_DIR),
@@ -24,13 +26,49 @@ class ReactAppView(View):
         except:
             
             return HttpResponse(status=501,)
-=======
->>>>>>> cfa270a91ff94f096ff3e17b4ace9ad6928af660
 
+    def post(self, request):
+        print("asbd")
+        if request.method =='POST':
+            form = ImageUploadForm(request.POST, request.FILES)
+            if form.is_valid():
+                post = form.save(commit=False)
+                post.save()
+'''
 def create(request):
     return render(request, 'stroke/main.html', {})
+'''
 
-def show_train_result(request):
+class SubmitPhotoView(viewsets.ModelViewSet):
+    queryset = ImageUploadModel.objects.all()
+    serializer_class = ImageUploadSerializer
+    
+    def list(self, request):
+        queryset = self.get_queryset()
+        serializer_class = self.get_serializer_class()
+        serializer = serializer_class(queryset, many=True)
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        return Response(serializer.data)
+    #image = Image.open(serializer.data)
+    #image.show()
+
+
+    #result_main()
+'''
+    def get(self, request, *args, **kwargs):
+        return self.list(request)
+    
+    # developer 생성
+    def post(self, request, *args, **kwargs):
+        return self.create(request)
+'''
+
+'''def show_train_result(request):
     result_str = ''
     if request.method =='POST':
         form = ImageUploadForm(request.POST, request.FILES)
@@ -46,13 +84,6 @@ def show_train_result(request):
             temp_get_image_url = get_image_url[:-4]
             temp_get_image_url = temp_get_image_url + '_new.jpg'
 
-<<<<<<< HEAD
-=======
-            get_image_url = imageURL         #output 이미지
-            temp_get_image_url = get_image_url[:-4]
-            temp_get_image_url = temp_get_image_url + '_new.jpg'
-
->>>>>>> cfa270a91ff94f096ff3e17b4ace9ad6928af660
             return render(request, 'stroke/show_train_result.html',{'form':form,'post':post,'result_str':result_str, 'get_image' : temp_get_image_url})
     else:
         form = ImageUploadForm()
@@ -76,21 +107,4 @@ def show_result(request):
             return render(request, 'stroke/show_result.html',{'form':form,'post':post,'result_str':result_str, 'get_image' : temp_get_image_url})
     else:
         form = ImageUploadForm()
-    return render(request, 'stroke/show_result.html',{'form':form})
-
-def capture(request):
-    if request.method =='POST':
-        form = ImageUploadForm(request.POST, request.FILES)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.save()
-
-            imageURL = settings.MEDIA_URL + form.instance.document.name
-            
-            #result_main(settings.MEDIA_ROOT_URL + imageURL, is_capture = False)
-
-            return render(request, 'stroke/capture.html',{'form':form,'post':post})
-    else:
-        form = ImageUploadForm()
-    return render(request, 'stroke/capture.html',{'form':form})
-
+    return render(request, 'stroke/show_result.html',{'form':form})'''

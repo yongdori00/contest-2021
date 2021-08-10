@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 import {MdClose} from 'react-icons/md';
-import Webcam from "react-webcam";
+
 import { Button } from './Button';
 import { ImagePreview } from './ImagePreview';
+import xtype from 'xtypejs'
+
 const Background = styled.div`
     width: 100%;
     height: 100%;
@@ -36,7 +38,7 @@ const ModalImg = styled.img`
     width: 100%;
     height: 100%;
     border-radius: 10px 0 0 10px;
-    background: #000;
+    
 `
 
 const ModalContent = styled.div`
@@ -72,66 +74,37 @@ const CloseModalButton = styled(MdClose)`
 `
 
 export const Modal = ({showModal, setShowModal}) =>{
-    const [image, setImage] = useState('');
     const [showImagePreview, setShowImagePreview] = useState(false);
-
-    const webcamRef = React.useRef(null);
-
-    const capture = React.useCallback(
-        () => {
-        const imageSrc = webcamRef.current.getScreenshot();
-        setImage(imageSrc);
+    
+    const nextModal = () =>{
         setShowImagePreview(prev => !prev);
         setShowModal(prev => !prev);
-        },
-        [webcamRef] 
-        
-    ); 
-    const videoConstraints = {
-        width: 1280,
-        height: 720,
-        facingMode: "user"
-    };
+    }
+    
+    
     return(
         <>
-            <ImagePreview showImagePreview={showImagePreview} setShowImagePreview={setShowImagePreview} ImageSrc={image}/>
+            <ImagePreview showImagePreview={showImagePreview} setShowImagePreview={setShowImagePreview}/>
             {showModal ? (
             <Background>
                 
                 <ModalWrapper showModal={showModal}>
-                        <Webcam
-                            audio={false}
-                            //height={720}
-                            ref={webcamRef}
-                            screenshotFormat="image/jpeg"
-                            //width={1280}
-                            mirrored={false}
-                            imageSmoothing={true}
-                            forceScreenshotSourceSize="true"
-                            videoConstraints={videoConstraints}
-                            style={{
-                                height: "100%",
-                                width: "100%",
-                                objectFit: "scale-down",
-                                position: "absolute"
-                            }}
-                        />
-                    
-                    
+                
                 
                 <CloseModalButton onClick={()=>setShowModal(prev=>!prev)}/>
                 <button>
-                <ModalContent>
-                        <h1>검사 방법</h1>
-                        <p>웹 카메라가 준비되어 있는지 확인 해주세요</p>
-                        <p>1. 얼굴에 그림자가 지지 않도록 밝은 곳에서 진행 해주세요</p>
-                        <p>2. 정면을 보고 웃어주세요</p>
-                        <p>3. 카메라를 응시한 채 '사진 찍기' 버튼을 눌러주세요</p>
-                        <p>4. 사진이 제대로 나왔는지 확인 후 '제출' 버튼을 통해 제출 해주세요</p>
-                        <p>5. 결과가 나올 때 까지 잠시 기다려주세요</p>
+                    
+                    <ModalContent>
+                            <h1>검사 방법</h1>
+                            <p>카메라가 바닥과 수평인지 확인 해주세요</p>
+                            <p>1. 얼굴에 그림자가 지지 않도록 밝은 곳에서 진행 해주세요</p>
+                            <p>2. 오른쪽 사진과 같이 정면을 보고 웃어주세요</p>
+                            <p>3. 카메라를 응시한 채 '캡쳐' 버튼을 눌러주세요</p>
+                            <p>4. 결과가 나올 때 까지 잠시 기다려주세요</p>
                     </ModalContent>
-                <Button className="btns" buttonStyle='btn--outline' buttonSize='btn--large' onClick={capture}>사진 찍기<i className="fas fa-camera"></i></Button>
+                <Button className="btns" buttonStyle='btn--outline' buttonSize='btn--large' onClick={nextModal}>사진 찍기<i className="fas fa-camera"></i></Button>
                 </button>
+                <ModalImg src={require('../images/img-4.jpg').default}/>
                 </ModalWrapper>
             </Background>
             ): null}

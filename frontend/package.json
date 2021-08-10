@@ -16,7 +16,8 @@
     "react-scripts": "4.0.3",
     "react-webcam": "^5.2.4",
     "styled-components": "^5.3.0",
-    "web-vitals": "^1.1.2"
+    "web-vitals": "^1.1.2",
+    "xtypejs": "^0.7.1"
   },
   "scripts": {
     "start": "react-scripts start",
