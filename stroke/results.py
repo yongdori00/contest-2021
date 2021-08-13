@@ -365,6 +365,8 @@ def use_string(FilePath, base_64_img):
 
     with open(FilePath, 'rb') as img:
         cropped_img = base64.b64encode(img.read()).decode('utf8')
+
+    print(JAW_POINTS)
         
     if pre_num >= 0.5:
         return True, cropped_img
@@ -375,8 +377,8 @@ def use_string(FilePath, base_64_img):
 def result_main(base_64_img, is_string, Filepath):
     is_stroke = True
     if is_string == True:
-        result_str, cropped_img = use_string(Filepath, base_64_img)
-        return result_str, cropped_img
+        is_stroke, cropped_img = use_string(Filepath, base_64_img)
+        return is_stroke, cropped_img
     elif is_string == False:
-        restult_str, cropped_img = use_image(base_64_img)
-        return restult_str, cropped_img
+        is_stroke, cropped_img = use_image(base_64_img)
+        return is_stroke, cropped_img
