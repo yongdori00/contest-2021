@@ -83,20 +83,27 @@ export const ImagePreview = ({showImagePreview, setShowImagePreview}) => {
         () => {
         const imageSrc = webcamRef.current.getScreenshot();
         console.log(imageSrc)
-        const URL = "http://localhost:8000/api/";
+        const URL_API = "http://localhost:8000/api/";
+        const URL_HOME = "http://localhost:8000/";
         
-        axios.post(URL, {
+        /*axios.post(URL_API, {
+            'description' : ip,
+            'document' : imageSrc
+        })
+        .then((Response)=>{console.log(Response.data)})
+        .catch((Error)=>{console.log(Error)})*/
+        setShowImagePreview(prev=>!prev);
+        setShowResultModal(prev=>!prev);
+        
+        axios.post(URL_HOME, {
             'description' : ip,
             'document' : imageSrc
         })
         .then((Response)=>{console.log(Response.data)})
         .catch((Error)=>{console.log(Error)})
-        setShowImagePreview(prev=>!prev);
-        setShowResultModal(prev=>!prev);
         },
-        [webcamRef] 
-        
-    ); 
+        [webcamRef]
+    );
     
     const getData = async () => {
         const res = await axios.get('https://geolocation-db.com/json/');

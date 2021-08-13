@@ -8,11 +8,13 @@ from .train import training
 from .results import result_main
 import os
 from django.views.generic import View
-from django.http import HttpResponse
+from django.http import JsonResponse, HttpResponse
 from .models import ImageUploadModel
 from .serializers import ImageUploadSerializer
 from rest_framework.response import Response
 from rest_framework import viewsets
+import base64
+import json
 
 class ReactAppView(View):
     def get(self, request):
@@ -26,14 +28,22 @@ class ReactAppView(View):
         except:
             
             return HttpResponse(status=501,)
-
+        
     def post(self, request):
-        print("asbd")
-        if request.method =='POST':
-            form = ImageUploadForm(request.POST, request.FILES)
-            if form.is_valid():
-                post = form.save(commit=False)
-                post.save()
+        data = json.loads(request.body)
+        ide = data['description']
+        doc = data['document']
+
+        new_doc = doc[23:]
+
+        ide = settings.MEDIA_ROOT_URL + settings.MEDIA_URL + ide + "_new.jpg"
+
+        result_str, cropped_img = result_main(new_doc, True, ide)
+        context = {'result':result_str, 'image':cropped_img}
+
+        return JsonResponse(context, safe=False)
+        
+
 '''
 def create(request):
     return render(request, 'stroke/main.html', {})
@@ -42,7 +52,7 @@ def create(request):
 class SubmitPhotoView(viewsets.ModelViewSet):
     queryset = ImageUploadModel.objects.all()
     serializer_class = ImageUploadSerializer
-    
+
     def list(self, request):
         queryset = self.get_queryset()
         serializer_class = self.get_serializer_class()
