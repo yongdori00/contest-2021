@@ -4,6 +4,7 @@ import numpy
 import math
 import sys
 import glob
+import base64
 import os
 from skimage import io
 from PIL import Image
@@ -11,7 +12,7 @@ from django.conf import settings
 
 CAM_ID = 0
 
-PREDICTOR_PATH = settings.STATIC_ROOT_URL + settings.STATIC_URL + "/data/shape_predictor_68_face_landmarks.dat"
+PREDICTOR_PATH = settings.STATIC_ROOT_URL + settings.STATIC_URL + "data/shape_predictor_68_face_landmarks.dat"
 SCALE_FACTOR = 1 
 FEATHER_AMOUNT = 11
 
@@ -120,9 +121,7 @@ def get_face_mask(im, landmarks):
     im = numpy.zeros(im.shape[:2], dtype=numpy.float64)
 
     for group in OVERLAY_POINTS:
-        draw_convex_hull(im,
-                         landmarks[group],
-                         color=1)
+        draw_convex_hull(im,landmarks[group],color=1)
 
     im = numpy.array([im, im, im]).transpose((1, 2, 0))
 
@@ -311,14 +310,73 @@ def use_image(FilePath): #있는 이미지 사용
     pre_num = predict(left_right_gap(root + '_new.jpg'))[0][0][0]
     
     if pre_num >= 0.5:
-        return True
+        return True, crop
     else:
-        return False
+        return False, crop
 
-def result_main(FilePath, is_capture):
+
+def use_string(FilePath, base_64_img):
+    
+    with open(settings.MEDIA_ROOT_URL + settings.MEDIA_URL + "str_img.webp", "wb") as fh:
+        fh.write(base64.b64decode(base_64_img))
+    fh.close()
+    
+    temp = Image.open(settings.MEDIA_ROOT_URL + settings.MEDIA_URL + "str_img.webp").convert("RGB")
+    temp.save(settings.MEDIA_ROOT_URL + settings.MEDIA_URL + "str_img.jpg", "jpeg")
+    
+    argv = settings.MEDIA_ROOT_URL + settings.MEDIA_URL + "str_img.jpg"
+    im1, landmarks1 = read_im_and_landmarks(argv)
+    mask = get_face_mask(im1, landmarks1)
+    # Run the HOG face detector on the image data
+    detected_faces = detector(im1, 1)
+    root, extension = os.path.splitext(argv)
+    
+    #win = dlib.image_window()
+    image = io.imread(root+'.jpg')
+    #image = io.imread(argv,plugin='matplotlib')
+    #image.imread(argv,pilmode="RGB")
+
+    cv2.imwrite('test2.jpg',image)    
+
+    # Show the desktop window with the image
+    #win.set_image(image)
+    for i, face_rect in enumerate(detected_faces):
+        # Detected faces are returned as an object with the coordinates 
+        # Draw a box around each face we found
+        #win.add_overlay(face_rect)
+        # Get the the face's pose
+        pose_landmarks = predictor(image, face_rect)
+        #win.add_overlay(pose_landmarks)
+        #cv2.imshow('frame', image)
+        cv2.imwrite('test.jpg', image)
+        # facial landmark represent red point
+    
+        for j in range(68):
+            x = pose_landmarks.part(j).x
+            y = pose_landmarks.part(j).y
+            cv2.circle(im1, (x,y), 1, (0, 0, 255), -1)
+        cv2.rectangle(im1,(face_rect.left(),face_rect.top()),
+                  (face_rect.right(),face_rect.bottom()),
+                   (0,255,0),2)
+        crop = im1[face_rect.top():face_rect.bottom(),face_rect.left():face_rect.right()]
+        cv2.imwrite(FilePath,crop)
+        # Draw the face landmarks on the screen. 
+    pre_num = predict(left_right_gap(FilePath))[0][0][0]
+
+    with open(FilePath, 'rb') as img:
+        cropped_img = base64.b64encode(img.read()).decode('utf8')
+        
+    if pre_num >= 0.5:
+        return True, cropped_img
+    else:
+        return False, cropped_img
+
+
+def result_main(base_64_img, is_string, Filepath):
     is_stroke = True
-    if is_capture == True:
-        capture_image()
-    elif is_capture == False:
-        restult_str = use_image(FilePath)
-        return restult_str
+    if is_string == True:
+        result_str, cropped_img = use_string(Filepath, base_64_img)
+        return result_str, cropped_img
+    elif is_string == False:
+        restult_str, cropped_img = use_image(base_64_img)
+        return restult_str, cropped_img
