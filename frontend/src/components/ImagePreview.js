@@ -83,11 +83,11 @@ export const ImagePreview = ({showImagePreview, setShowImagePreview}) => {
         () => {
         const imageSrc = webcamRef.current.getScreenshot();
         console.log(imageSrc)
-        const URL = "http://localhost:8000/api/";
+        const URL = "http://localhost:8000";
         
         axios.post(URL, {
             'description' : ip,
-            'document' : imageSrc
+            'document' : imageSrc,
         })
         .then((Response)=>{console.log(Response.data)})
         .catch((Error)=>{console.log(Error)})
