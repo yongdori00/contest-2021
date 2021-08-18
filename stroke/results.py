@@ -202,7 +202,7 @@ def read_im_and_landmarks(fname):
         else:
             ret += (left_nose/right_nose)
         print(3 - ret)
-    return im, s
+    return im, s, int(LEFT_LIP[0,0]), int(LEFT_LIP[0,1]), int(LEFT_EYE[0,0]), int(LEFT_EYE[0,1]), int(RIGHT_EYE[0,0]) , int(RIGHT_EYE[0,1]), int(RIGHT_LIP[0,1]), int(RIGHT_LIP[0,1])
 
 def left_right_gap(fname):
     im = cv2.imread(fname, cv2.IMREAD_COLOR)
@@ -325,7 +325,7 @@ def use_string(FilePath, base_64_img):
     temp.save(settings.MEDIA_ROOT_URL + settings.MEDIA_URL + "str_img.jpg", "jpeg")
     
     argv = settings.MEDIA_ROOT_URL + settings.MEDIA_URL + "str_img.jpg"
-    im1, landmarks1 = read_im_and_landmarks(argv)
+    im1, landmarks1, LEFT_EYE_X, LEFT_EYE_Y, LEFT_LIP_X, LEFT_LIP_Y, RIGHT_EYE_X, RIGHT_EYE_Y, RIGHT_LIP_X, RIGHT_LIP_Y = read_im_and_landmarks(argv)
     mask = get_face_mask(im1, landmarks1)
     # Run the HOG face detector on the image data
     detected_faces = detector(im1, 1)
@@ -367,16 +367,17 @@ def use_string(FilePath, base_64_img):
         cropped_img = base64.b64encode(img.read()).decode('utf8')
         
     if pre_num >= 0.5:
-        return True, cropped_img
+        return True, cropped_img, LEFT_EYE_X, LEFT_EYE_Y, LEFT_LIP_X, LEFT_LIP_Y, RIGHT_EYE_X, RIGHT_EYE_Y, RIGHT_LIP_X, RIGHT_LIP_Y
     else:
-        return False, cropped_img
+        return False, cropped_img, LEFT_EYE_X, LEFT_EYE_Y, LEFT_LIP_X, LEFT_LIP_Y, RIGHT_EYE_X, RIGHT_EYE_Y, RIGHT_LIP_X, RIGHT_LIP_Y
 
 
 def result_main(base_64_img, is_string, Filepath):
     is_stroke = True
     if is_string == True:
-        result_str, cropped_img = use_string(Filepath, base_64_img)
-        return result_str, cropped_img
+        is_stroke, cropped_img, LEFT_EYE_X, LEFT_EYE_Y, LEFT_LIP_X, LEFT_LIP_Y, RIGHT_EYE_X, RIGHT_EYE_Y, RIGHT_LIP_X, RIGHT_LIP_Y = use_string(Filepath, base_64_img)
+        return is_stroke, cropped_img, LEFT_EYE_X, LEFT_EYE_Y, LEFT_LIP_X, LEFT_LIP_Y, RIGHT_EYE_X, RIGHT_EYE_Y, RIGHT_LIP_X, RIGHT_LIP_Y
+        #return is_stroke, cropped_img, LEFT_EYE[0][0], LEFT_LIP[0][0], RIGHT_EYE[0][0], RIGHT_LIP[0][0], LEFT_EYE[0][1], LEFT_LIP[0][1], RIGHT_EYE[0][1], RIGHT_LIP[0][1]
     elif is_string == False:
-        restult_str, cropped_img = use_image(base_64_img)
-        return restult_str, cropped_img
+        is_stroke, cropped_img = use_image(base_64_img)
+        return is_stroke, cropped_img

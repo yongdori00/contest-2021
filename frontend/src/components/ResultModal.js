@@ -79,8 +79,6 @@ export const ResultModal = ({showResultModal, setShowResultModal}) =>{
         .then((Response)=>{console.log(Response.data)})
         .catch((Error)=>{console.log(Error)})
 
-        result_str = Response.data.result
-        console.log(result_str)
         //setReady(true);
     }
     getResult();
