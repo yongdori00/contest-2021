@@ -41,7 +41,7 @@ class ReactAppView(View):
         result_str, cropped_img, LEFT_EYE_X, LEFT_EYE_Y, LEFT_LIP_X, LEFT_LIP_Y, RIGHT_EYE_X, RIGHT_EYE_Y, RIGHT_LIP_X, RIGHT_LIP_Y = result_main(new_doc, True, ide)
 
         #result_str, cropped_img, LEFT_EYE_X, LEFT_LIP_X, RIGHT_EYE_X, RIGHT_LIP_X, LEFT_EYE_Y, LEFT_LIP_Y, RIGHT_EYE_Y, RIGHT_LIP_Y = result_main(new_doc, True, ide)
-        context = {'result':result_str, 'image':cropped_img, 'left_eye_x':LEFT_EYE_X, 'left_eye_y':LEFT_EYE_Y, 'left_lip_x':LEFT_LIP_X, 'left_lip_y':LEFT_LIP_Y, 'right_eye_x':RIGHT_EYE_X, 'right_eye_y':RIGHT_EYE_Y, 'right_lip_x':RIGHT_LIP_X, 'right_lip_y':RIGHT_LIP_Y}
+        context = {"result":result_str, "image":cropped_img, "left_eye_x":LEFT_EYE_X, "left_eye_y":LEFT_EYE_Y, "left_lip_x":LEFT_LIP_X, "left_lip_y":LEFT_LIP_Y, "right_eye_x":RIGHT_EYE_X, "right_eye_y":RIGHT_EYE_Y, "right_lip_x":RIGHT_LIP_X, "right_lip_y":RIGHT_LIP_Y}
         #context = {'result':result_str, 'image':cropped_img, 'left_eye':LEFT_EYE,'left_lip':LEFT_LIP, 'right_eye':RIGHT_EYE, 'right_lip':RIGHT_LIP}
 
         return JsonResponse(context, safe=False)
