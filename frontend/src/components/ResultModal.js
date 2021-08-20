@@ -73,7 +73,7 @@ export const ResultModal = ({showResultModal, setShowResultModal}) =>{
     const [ready, setReady] = useState(false);
     let [results, setResults] = useState([]);
     const getResult = () => {
-        const URL = "http://203.253.14.162:8080/";
+        const URL = "http://localhost:8000/";
         axios.get(URL)
         .then((Response)=>{console.log(Response.data)})
         .catch((Error)=>{console.log(Error)})
