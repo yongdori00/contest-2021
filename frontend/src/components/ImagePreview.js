@@ -89,7 +89,7 @@ export const ImagePreview = ({showImagePreview, setShowImagePreview}) => {
         () => {
             
         const imageSrc = webcamRef.current.getScreenshot();
-        const URL = "http://58.123.84.51:8000/";
+        const URL = "http://58.123.84.51:8080/";
         
         axios.post(URL, {
             'description' : ip,
