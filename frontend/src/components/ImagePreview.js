@@ -79,17 +79,17 @@ export const ImagePreview = ({showImagePreview, setShowImagePreview}) => {
     var ip = null;
     var json_list = null;
     const webcamRef = React.useRef(null);
-    var result = ".";
-    var eye_length = "";
-    var nose_length = "";
-    var lip_length = "";
-    var image = null;
+    const [result, setResult] = useState(".");
+    const [eye_length, setEye_length] = useState("");
+    const [nose_length, setNose_length] = useState("");
+    const [lip_length, setLip_length] = useState("");
+    const [image, setImage] = useState(null);
 
     const capture = React.useCallback(
         () => {
             
         const imageSrc = webcamRef.current.getScreenshot();
-        const URL = "http://localhost:8000/";
+        const URL = "http://58.123.84.51:8000/";
         
         axios.post(URL, {
             'description' : ip,
@@ -98,13 +98,12 @@ export const ImagePreview = ({showImagePreview, setShowImagePreview}) => {
         .then((Response)=>{
             json_list = JSON.stringify(Response.data);
             const obj = JSON.parse(json_list);
-            console.log(Response.data);
-            console.log(obj.result);
-            result = obj.result;
-            eye_length = obj.eye_rate;
-            nose_length = obj.nose_rate;
-            lip_length = obj.lip_rate;
-            image = obj.image;})
+            setResult(obj.result);
+            setEye_length(obj.eye_rate);
+            setNose_length(obj.nose_rate);
+            setLip_length(obj.lip_rate);
+            setImage(obj.image);
+            })
         .catch((Error)=>{console.log(Error)})
         setShowImagePreview(prev=>!prev);
         setShowResultModal(prev=>!prev);
@@ -124,7 +123,6 @@ export const ImagePreview = ({showImagePreview, setShowImagePreview}) => {
         height: 720,
         facingMode: "user"
     };
-
     return(
         <>
         {showImagePreview ? (
@@ -163,14 +161,18 @@ export const ImagePreview = ({showImagePreview, setShowImagePreview}) => {
                 <ModalWrapper showResultModal={showResultModal}>
                     <ModalContent>
                             <h1>검사 결과</h1>
-                            <p>뇌졸중 의심 여부 : {result}</p>
+                            <p>뇌졸중 의심 여부 : {String(result)}</p>
                             <p>아래 값들은 코 중앙으로부터 각 좌우측 부위까지 거리의 비율입니다</p>
                             <p>좌측 눈과 우측 눈 : {eye_length}</p>
                             <p>좌측 입술과 우측 입술 : {lip_length}</p>
                             <p>좌측 코끝과 우측 코끝 : {nose_length}</p> 
                             <p>사진 촬영 규칙을 지키지 않았거나 얼굴이 수평으로 찍히지 않았을 경우 검사 결과가 정확하지 않을 수 있으니 다시 시도해주시기 바랍니다.</p>
                     </ModalContent>     
-                    <ModalImg src={image}/>
+                    <ModalImg src={"data:image/jpeg;base64,"+image}
+                    style={{
+                        height: "100%",
+                        width: "100%",
+                    }}/>
                 <CloseModalButton onClick={()=>setShowResultModal(prev=>!prev)}/>
                 
                 </ModalWrapper>
