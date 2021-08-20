@@ -83,7 +83,7 @@ export const ImagePreview = ({showImagePreview, setShowImagePreview}) => {
     const capture = React.useCallback(
         () => {
         const imageSrc = webcamRef.current.getScreenshot();
-        const URL = "http://localhost:8000";
+        const URL = "http://203.253.14.162:8080/";
         
         axios.post(URL, {
             'description' : ip,
