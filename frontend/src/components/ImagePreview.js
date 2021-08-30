@@ -130,7 +130,7 @@ export const ImagePreview = ({showImagePreview, setShowImagePreview}) => {
                 
                 <ModalWrapper showImagePreview={showImagePreview}>
                 
-                <Webcam
+            {<Webcam
                             audio={false}
                             height={720}
                             ref={webcamRef}
