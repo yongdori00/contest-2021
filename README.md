@@ -238,8 +238,8 @@ Need to setting this texts to launch server
             error_log   /var/log/nginx/example.com_error.log error;
             charset     utf-8;
 
-            ssl_certificate     /etc/nginx/conf.d/django.crt;
-            ssl_certificate_key /etc/nginx/conf.d/django.key;
+            ssl_certificate     /your/path/project/conf.d/django.crt;
+            ssl_certificate_key /your/path/project/conf.d/django.key;
 
             error_page 497 https://$server_name$request_uri;
 
