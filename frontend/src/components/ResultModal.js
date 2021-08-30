@@ -71,15 +71,14 @@ const CloseModalButton = styled(MdClose)`
 
 export const ResultModal = ({showResultModal, setShowResultModal}) =>{
     const [ready, setReady] = useState(false);
-    var result_str
-    var cropped_img
+    let [results, setResults] = useState([]);
     const getResult = () => {
         const URL = "http://localhost:8000/";
         axios.get(URL)
         .then((Response)=>{console.log(Response.data)})
         .catch((Error)=>{console.log(Error)})
-
-        //setReady(true);
+        //const obj = JSON.parse(Response.data);
+        //console.log(obj.result);
     }
     getResult();
     return(
