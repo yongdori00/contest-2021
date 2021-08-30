@@ -1,9 +1,9 @@
-#Setting Nginx and uwsgi
+# Setting Nginx and uwsgi
 
 this is 
 
-##save to /FULL/PATH/YOUR/PROJECT
-###filename contest_uwsgi.ini file
+## save to /FULL/PATH/YOUR/PROJECT
+### filename contest_uwsgi.ini file
 
     [uwsgi]
     # Django-related settings
@@ -26,8 +26,8 @@ this is
     # clear environment on exit
     vacuum          = true
 
-##save to /ETC/NGINX/
-###filename nginx.conf
+## save to /ETC/NGINX/
+### filename nginx.conf
 
     user www-data;
     worker_processes auto;
@@ -99,8 +99,8 @@ this is
             include /etc/nginx/sites-enabled/*;
     }
 
-##save to /etc/nginx/
-###filename uwsgi_params
+## save to /etc/nginx/
+### filename uwsgi_params
 
     uwsgi_param  QUERY_STRING       $query_string;
     uwsgi_param  REQUEST_METHOD     $request_method;
@@ -119,8 +119,8 @@ this is
     uwsgi_param  SERVER_PORT        $server_port;
     uwsgi_param  SERVER_NAME        $server_name;
 
-##save to /etc/nginx/sites-available/
-###filename default
+## save to /etc/nginx/sites-available/
+### filename default
 
     ##
     # You should look at the following URL's in order to grasp a solid understanding
