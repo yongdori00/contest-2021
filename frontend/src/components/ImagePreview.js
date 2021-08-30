@@ -89,7 +89,7 @@ export const ImagePreview = ({showImagePreview, setShowImagePreview}) => {
         () => {
             
         const imageSrc = webcamRef.current.getScreenshot();
-        const URL = "https://152.70.69.168:8000";
+        const URL = "https://152.70.69.168";
         
         axios.post(URL, {
             'description' : ip,
@@ -130,7 +130,7 @@ export const ImagePreview = ({showImagePreview, setShowImagePreview}) => {
                 
                 <ModalWrapper showImagePreview={showImagePreview}>
                 
-            {<Webcam
+            <Webcam
                             audio={false}
                             height={720}
                             ref={webcamRef}
@@ -148,7 +148,7 @@ export const ImagePreview = ({showImagePreview, setShowImagePreview}) => {
                             }}
                         />
                 <button>
-                <Button className="btns" buttonStyle='btn--primary' buttonSize='btn--outline' onClick={capture}>캡쳐<i className="fas fa-paper-plane"></i></Button>
+		    <Button className="btns" buttonStyle='btn--primary' buttonSize='btn--outline' onClick={capture}>캡쳐<i className="fas fa-paper-plane"></i></Button>
 
                 </button>
                 <CloseModalButton onClick={()=>setShowImagePreview(prev=>!prev)}/>

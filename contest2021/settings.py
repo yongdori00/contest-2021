@@ -140,8 +140,7 @@ MEDIA_ROOT_URL='.'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATIC_URL = 'static/'
 STATIC_ROOT_URL = '.'
-<<<<<<< HEAD
-ALLOWED_HOSTS = ['127.0.0.1', 'stroke_stop.com', 'localhost', '152.70.69.168']
+ALLOWED_HOSTS = ['*']
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'frontend/build/static/'),
