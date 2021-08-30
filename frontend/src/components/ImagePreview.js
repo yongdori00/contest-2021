@@ -84,12 +84,12 @@ export const ImagePreview = ({showImagePreview, setShowImagePreview}) => {
     const [nose_length, setNose_length] = useState("");
     const [lip_length, setLip_length] = useState("");
     const [image, setImage] = useState(null);
-
+ 	
     const capture = React.useCallback(
         () => {
             
         const imageSrc = webcamRef.current.getScreenshot();
-        const URL = "http://58.123.84.51:8000/";
+        const URL = "https://152.70.69.168:8000";
         
         axios.post(URL, {
             'description' : ip,

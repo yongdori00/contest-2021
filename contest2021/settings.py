@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'stroke.apps.StrokeConfig',
     'corsheaders',
     'rest_framework',
+    'sslserver',
 ]
 
 MIDDLEWARE = [
@@ -136,11 +137,16 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 MEDIA_ROOT_URL='.'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATIC_URL = 'static/'
 STATIC_ROOT_URL = '.'
-ALLOWED_HOSTS = ['127.0.0.1', 'stroke_stop.com', 'localhost', '58.123.84.51']
+ALLOWED_HOSTS = ['127.0.0.1', 'stroke_stop.com', 'localhost', '152.70.69.168']
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'frontend/build/static'),
+    os.path.join(BASE_DIR, 'frontend/build/static/'),
 ]
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SEESION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True
