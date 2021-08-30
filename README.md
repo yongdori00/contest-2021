@@ -1,6 +1,6 @@
 # Setting Nginx and uwsgi
 
-this is 
+Need to setting this texts to launch server
 
 ## save to /FULL/PATH/YOUR/PROJECT
 ### filename contest_uwsgi.ini file
