@@ -30,6 +30,7 @@ class ReactAppView(View):
             return HttpResponse(status=501,)
         
     def post(self, request):
+        print("결과가 왜 이래")
         data = json.loads(request.body)
         ide = data['description']
         doc = data['document']
